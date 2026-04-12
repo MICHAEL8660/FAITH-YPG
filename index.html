@@ -11,8 +11,9 @@
             --ypg-gold: #FFD700;
             --bg-light: #f0f2f5;
         }
-        /* The Welcome Screen Overlay */
-#welcome-screen {
+
+        /* --- Welcome Screen Overlay --- */
+       #welcome-screen {
     position: fixed;
     top: 0;
     left: 0;
@@ -25,46 +26,61 @@
     align-items: center;
     z-index: 10000;
     
-    /* Starting position: Hidden at the bottom */
-    transform: translateY(100%); 
+    /* Start position: Bottom of browser */
+    transform: translateY(100%);
     
-    /* Animation Name | Duration | Timing | Fills (stays at end state) */
-    animation: entrance-exit 3s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+    /* Set to 6 seconds total duration */
+    animation: slide-in-stay-slide-out 6s cubic-bezier(0.77, 0, 0.175, 1) forwards;
 }
-
-#welcome-screen img {
-    width: 150px;
+        #welcome-screen img {
+    width: 80vw; 
+    max-width: 450px; 
+    height: auto;
     margin-bottom: 20px;
+    
+    /* This starts the fade at the same time the screen moves */
+    animation: logo-fade-in 3.5s ease-out forwards; 
 }
-
-#welcome-screen p {
-    color: white;
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-/* The Keyframe Animation */
-@keyframes entrance-exit {
-    0% {
+       @keyframes slide-in-stay-slide-out {
+    0% { 
         transform: translateY(100%); /* Start at bottom */
+        opacity: 0.3;                   /* Fully invisible */
     }
-    20%, 80% {
-        transform: translateY(0);    /* Slide to center and stay */
+    15% { 
+        transform: translateY(0);    /* Float to center */
+        opacity: 1;                   /* Fully visible */
+    }
+    80% { 
+        transform: translateY(0);    /* Stay perfectly still */
+        opacity: 1;                   /* Stay visible */
+    }
+    100% { 
+        transform: translateY(-100%); /* Float out to top */
+        opacity: 0.5;                   /* Fade away smoothly */
+    }
+}
+@keyframes logo-fade-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.8); /* Starts slightly smaller */
     }
     100% {
-        transform: translateY(-100%); /* Slide out through top */
+        opacity: 1;
+        transform: scale(1);   /* Grows to full size as it fades in */
     }
 }
-
+ 
+        /* --- Main Page Styling --- */
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(180deg, var(--ypg-blue) 0%, #001a6b 300px, var(--bg-light) 300px);
+            background: linear-gradient(180deg, var(--ypg-blue) 0%, #001a6b 350px, var(--bg-light) 350px);
             margin: 0;
             display: flex;
             justify-content: center;
-            padding: 40px 20px;
+            padding: 120px 20px 40px; 
             min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
         }
 
         .profile-card {
@@ -75,26 +91,28 @@
             padding: 30px;
             text-align: center;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
         }
 
         .logo-container {
-            width: 150px; /* Increased size slightly for your detailed logo */
+            width: 150px; 
             height: 150px;
             background: white;
-            margin: -100px auto 15px; /* Adjusted margin to center the larger logo */
+            margin: -100px auto 15px; 
             border-radius: 50%;
-            padding: 10px;
+            padding: 5px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            display: flex; /* Helps center the logo image */
+            display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
         .logo-container img {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            border-radius: 50%; 
         }
 
         h1 { font-size: 1.5rem; color: var(--ypg-blue); margin: 10px 0 5px; }
@@ -131,7 +149,6 @@
             margin-right: 10px;
         }
 
-        /* Branding Colors */
         .tiktok-icon { color: #000; }
         .instagram-icon { color: #E1306C; }
         .snapchat-icon { color: #FFFC00; text-shadow: 0 0 1px #000; }
@@ -147,9 +164,11 @@
     </style>
 </head>
 <body>
+
     <div id="welcome-screen">
-    <img src="welome.png" alt="YPG Logo">
-</div>
+        <img src="welcome.png" alt="YPG Logo">
+        <p style="color:white; font-weight:bold; letter-spacing:2px;">FOLLOW THE MOVEMENT</p>
+    </div>
 
     <div class="profile-card">
         <div class="logo-container">
@@ -163,15 +182,12 @@
             <a href="https://www.tiktok.com/@faithypg_madina" class="social-link" target="_blank">
                 <i class="fab fa-tiktok tiktok-icon"></i> TikTok
             </a>
-
             <a href="https://www.instagram.com/faithypg_madina" class="social-link" target="_blank">
                 <i class="fab fa-instagram instagram-icon"></i> Instagram
             </a>
-
             <a href="https://www.snapchat.com/add/faithypg_madina" class="social-link" target="_blank">
                 <i class="fab fa-snapchat snapchat-icon"></i> Snapchat
             </a>
-
             <a href="https://chat.whatsapp.com/JVV9eL1RCQeAh75ul1WIzK" class="social-link" target="_blank">
                 <i class="fab fa-whatsapp whatsapp-icon"></i> Join WhatsApp Group
             </a>
@@ -179,6 +195,18 @@
 
         <p class="footer-text">SERVICE ALL THE WAY!</p>
     </div>
+
+   <script>
+    const welcome = document.getElementById("welcome-screen");
+    
+    // This waits for the 'float up' to FINISH before hiding the screen
+    welcome.addEventListener('animationend', (event) => {
+        // This ensures it only hides once the background slide is done
+        if (event.animationName === 'slide-in-stay-slide-out') {
+            welcome.style.display = 'none';
+        }
+    });
+</script>
 
 </body>
 </html>
