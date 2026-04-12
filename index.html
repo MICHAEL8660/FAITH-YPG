@@ -11,6 +11,51 @@
             --ypg-gold: #FFD700;
             --bg-light: #f0f2f5;
         }
+        /* The Welcome Screen Overlay */
+#welcome-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--ypg-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    
+    /* Starting position: Hidden at the bottom */
+    transform: translateY(100%); 
+    
+    /* Animation Name | Duration | Timing | Fills (stays at end state) */
+    animation: entrance-exit 3s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+#welcome-screen img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+#welcome-screen p {
+    color: white;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* The Keyframe Animation */
+@keyframes entrance-exit {
+    0% {
+        transform: translateY(100%); /* Start at bottom */
+    }
+    20%, 80% {
+        transform: translateY(0);    /* Slide to center and stay */
+    }
+    100% {
+        transform: translateY(-100%); /* Slide out through top */
+    }
+}
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -33,17 +78,22 @@
         }
 
         .logo-container {
-            width: 100px;
-            height: 100px;
+            width: 150px; /* Increased size slightly for your detailed logo */
+            height: 150px;
             background: white;
-            margin: -80px auto 15px;
+            margin: -100px auto 15px; /* Adjusted margin to center the larger logo */
             border-radius: 50%;
             padding: 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex; /* Helps center the logo image */
+            justify-content: center;
+            align-items: center;
         }
 
         .logo-container img {
-            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
             height: auto;
         }
 
@@ -97,14 +147,17 @@
     </style>
 </head>
 <body>
+    <div id="welcome-screen">
+    <img src="welome.png" alt="YPG Logo">
+</div>
 
     <div class="profile-card">
         <div class="logo-container">
             <img src="logo.png" alt="YPG Logo">
         </div>
 
-        <h1>FAITH YPG MADINA ESTATES</h1>
-        <p class="motto">"To Know His Will and To Do It"</p>
+        <h1>FAITH YPG MADINA</h1>
+        <p class="motto">To Know His Will and To Do It</p>
 
         <div class="links-container">
             <a href="https://www.tiktok.com/@faithypg_madina" class="social-link" target="_blank">
