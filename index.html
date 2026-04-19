@@ -18,6 +18,8 @@
             margin: 0;
             background-color: var(--ypg-blue); 
             overflow-x: hidden;
+            height: 100vh;
+            width: 100vw;
         }
 
         /* --- Welcome Screen Overlay --- */
@@ -48,11 +50,12 @@
         /* --- Reveal Wrapper: This hides the whole page background --- */
         #content-reveal {
             background: linear-gradient(180deg, var(--ypg-blue) 0%, #001a6b 350px, var(--bg-light) 350px);
-            padding: 120px 20px 40px; 
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             justify-content: center;
+            align-items: center;
             box-sizing: border-box;
+            padding-top:60px;
             
             /* Logic: Wait for welcome screen to start exit */
             opacity: 0;
@@ -62,10 +65,10 @@
 
         .profile-card {
             background: white;
-            width: 100%;
+            width: 90%;
             max-width: 400px;
             border-radius: 24px;
-            padding: 30px;
+            padding: 20px 30px;
             text-align: center;
             border: 3px solid var(--ypg-blue);
             box-shadow: 0 10px 25px rgba(0, 35, 149, 0.4); /* Glow matching your YPG Blue */
@@ -73,10 +76,10 @@
         }
 
         .logo-container {
-            width: 200px; 
-            height: 200px;
+            width: 130px; 
+            height: 130px;
             background: white;
-            margin: -100px auto 15px; 
+            margin: -80px auto 15px; 
             border-radius: 50%;
             padding: 5px;
             border: 3px solid var(--ypg-blue);
